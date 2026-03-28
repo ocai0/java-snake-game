@@ -96,6 +96,8 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
 
+        
+
         // collides w/ left border
         if(x[0] < 0) running = false;
 
@@ -114,10 +116,21 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+        public void checkApple() {
+    if((x[0] == maca.x * UNIT_SIZE) && (y[0] == maca.y * UNIT_SIZE)) {
+        bodyParts++;
+        applesEaten++;
+        System.out.println("Maçã comida! +1 no tamanho da cobra.");
+        maca = new Maca(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
+                        random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
+    }
+}
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(running) {
             move();
+            checkApple();
             checkCollisions();
         }
         repaint();
