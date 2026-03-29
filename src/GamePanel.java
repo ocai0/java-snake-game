@@ -9,27 +9,30 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
     static final int DELAY = 75;
-    final int x[] = new int[GAME_UNITS];
-    final int y[] = new int[GAME_UNITS];
-    int bodyParts = 6;
     int score;
     Apple fruit;
     char direction = 'R';
     boolean running = false;
     Timer timer;
     Random random;
+    Snake player;
+    KeyAdapter activeControls;
 
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
-        this.addKeyListener(new MyKeyAdapter());
+        if(player != null) this.removeKeyListener(activeControls);
         startGame();
     }
 
 
     public void startGame() {
+        player = new Snake();
+        activeControls = player.bindControls();
+        this.addKeyListener(activeControls);
+
         fruit = new Apple(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
                 random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
 
@@ -48,21 +51,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw(Graphics g) {
         if(running) {
+            player.draw(g);
             if(fruit != null) {
                 for(int i = 0; i < SCREEN_HEIGHT/UNIT_SIZE; i++) {
                     g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
                     g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
-                }
-
-                for (int i = 0; i < bodyParts; i++) {
-                    if(i == 0) {
-                        g.setColor(Color.GREEN);
-                        g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
-                    }
-                    else {
-                        g.setColor(new Color(45, 180, 0));
-                        g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
-                    }
                 }
                 g.setColor(Color.red);
                 g.fillOval(fruit.x * UNIT_SIZE, fruit.y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
@@ -75,59 +68,9 @@ public class GamePanel extends JPanel implements ActionListener {
         
     }
 
-    public void move() {
-        for(int i = bodyParts; i > 0; i--) {
-            x[i] = x[i - 1];
-            y[i] = y[i - 1];
-        }
-
-        switch(direction) {
-            case 'U':
-                y[0] = y[0] - UNIT_SIZE;
-                break;
-            case 'D':
-                y[0] = y[0] + UNIT_SIZE;
-                break;
-            case 'L':
-                x[0] = x[0] - UNIT_SIZE;
-                break;
-            case 'R':
-                x[0] = x[0] + UNIT_SIZE;
-                break;
-        }
-    }
-
-     public void checkCollisions() {
-        // head collides w/ body
-        for(int i = bodyParts; i > 0; i--) {
-            if((x[0] == x[1]) && (y[0] == y[1])) {
-                running = false;
-            }
-        }
-
-        
-
-        // collides w/ left border
-        if(x[0] < 0) running = false;
-
-        // collides w/ right border
-        if(x[0] > SCREEN_WIDTH) running = false;
-
-        // collides w/ top border
-        if(y[0] < 0) running = false;
-
-        // collides w/ bottom border
-        if(y[0] > SCREEN_HEIGHT) running = false;
-
-        if(!running) {
-            timer.stop();
-        }
-
-    }
-
     public void checkApple() {
-        if((x[0] == fruit.x * UNIT_SIZE) && (y[0] == fruit.y * UNIT_SIZE)) {
-            bodyParts++;
+        if((player.getHeadXPos() == fruit.x * UNIT_SIZE) && (player.getHeadYPos() == fruit.y * UNIT_SIZE)) {
+            player.grow();
             score += fruit.getPoints();
             fruit = new Apple(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
                             random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
@@ -161,9 +104,10 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(running) {
-            move();
+            player.update();
             checkApple();
-            checkCollisions();
+            player.checkCollisions();
+            if(player.isDead()) running = false;
         }
         repaint();
     }
