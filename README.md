@@ -7,6 +7,18 @@ Ok, e quais são os principais objetivos:
 - Criar código com sobrescrita de comportamento (`@Override`)
 - Criar código com polimorfismo (`extends` e algum lugar que usa da superclasse pra referenciar objetos das subclasses (provavelmente um `ArrayList` faz isso))
 
+
+### Checklist dos requisitos mínimos
+- Hierarquia OO
+    - 1 superclasse ([Fruit.java](./src/Fruit.java)), com atributos e métodos.
+    - 2 subclasses ([Apple](./src/Apple.java)) com atributo e método sobrescrito
+    - Algum lugar que referencie a classe pai ([GamePanel.java:16](./src/GamePanel.java))
+- Qualidade do código
+    - Mensagens claras
+    - Encapsulamento (tem em lugares como *[Snake.getHeadXPos](./src/Snake.java)* e [Snake.kill](./src/Snake.java), [GamePanel.addToScore](./src/GamePanel.java))
+- Execução
+    - *Assim, o jogo roda bonitinho, então podemos considerar esse só "check"?
+
 **O que a gente não faz por uns pontinhos no semestre, não?*
 
 ### Algumas regras desse projeto
