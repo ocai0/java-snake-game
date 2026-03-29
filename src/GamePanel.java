@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_WIDTH = 600;
@@ -10,7 +11,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
     static final int DELAY = 75;
     int score;
-    Apple fruit;
+    ArrayList<Apple> fruits = new ArrayList<Apple>();
     char direction = 'R';
     boolean running = false;
     Timer timer;
@@ -32,16 +33,16 @@ public class GamePanel extends JPanel implements ActionListener {
         player = new Snake();
         activeControls = player.bindControls();
         this.addKeyListener(activeControls);
-
-        fruit = new Apple(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
-                random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
-
+        fruits.clear();
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
-        
+        generateFruit();
     }
 
+    private void generateFruit() {
+        fruits.add(new Apple(random.nextInt(SCREEN_WIDTH / UNIT_SIZE), random.nextInt(SCREEN_HEIGHT / UNIT_SIZE)));
+    }
     
 
     public void paintComponent(Graphics g) {
@@ -51,16 +52,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw(Graphics g) {
         if(running) {
+            drawScore(g);
             player.draw(g);
-            if(fruit != null) {
-                for(int i = 0; i < SCREEN_HEIGHT/UNIT_SIZE; i++) {
-                    g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
-                    g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
-                }
-                g.setColor(Color.red);
-                g.fillOval(fruit.x * UNIT_SIZE, fruit.y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
-                drawScore(g);
-            }
+            for(Fruit fruit : fruits) fruit.draw(g);
         }
         else {
             gameOver(g);
@@ -68,12 +62,14 @@ public class GamePanel extends JPanel implements ActionListener {
         
     }
 
-    public void checkApple() {
-        if((player.getHeadXPos() == fruit.x * UNIT_SIZE) && (player.getHeadYPos() == fruit.y * UNIT_SIZE)) {
-            player.grow();
-            score += fruit.getPoints();
-            fruit = new Apple(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
-                            random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
+    public void checkPlayerAndFruitCollisions() {
+        for(Fruit fruit : fruits) {
+            if((player.getHeadXPos() == fruit.x * UNIT_SIZE) && (player.getHeadYPos() == fruit.y * UNIT_SIZE)) {
+                player.grow();
+                score += fruit.getPoints();
+                fruits.remove(fruit);
+                generateFruit();
+            }
         }
     }
 
@@ -105,7 +101,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(running) {
             player.update();
-            checkApple();
+            checkPlayerAndFruitCollisions();
             player.checkCollisions();
             if(player.isDead()) running = false;
         }
