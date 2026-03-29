@@ -117,6 +117,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 timer.stop();
                 fruits.clear();
                 this.removeKeyListener(activeControls);
+                score = 0;
                 startGame();
              }
         }
