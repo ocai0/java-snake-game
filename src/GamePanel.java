@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements ActionListener {
     final int y[] = new int[GAME_UNITS];
     int bodyParts = 6;
     int score;
-    Maca maca;
+    Apple fruit;
     char direction = 'R';
     boolean running = false;
     Timer timer;
@@ -30,8 +30,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
 
     public void startGame() {
-            maca = new Maca(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
-                    random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
+        fruit = new Apple(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
+                random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
 
         running = true;
         timer = new Timer(DELAY, this);
@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw(Graphics g) {
         if(running) {
-            if(maca != null) {
+            if(fruit != null) {
                 for(int i = 0; i < SCREEN_HEIGHT/UNIT_SIZE; i++) {
                     g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
                     g.drawLine(0, i*UNIT_SIZE, SCREEN_WIDTH, i*UNIT_SIZE);
@@ -65,7 +65,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     }
                 }
                 g.setColor(Color.red);
-                g.fillOval(maca.x * UNIT_SIZE, maca.y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+                g.fillOval(fruit.x * UNIT_SIZE, fruit.y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
                 drawScore(g);
             }
         }
@@ -126,10 +126,10 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void checkApple() {
-        if((x[0] == maca.x * UNIT_SIZE) && (y[0] == maca.y * UNIT_SIZE)) {
+        if((x[0] == fruit.x * UNIT_SIZE) && (y[0] == fruit.y * UNIT_SIZE)) {
             bodyParts++;
-            score += maca.getPoints();
-            maca = new Maca(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
+            score += fruit.getPoints();
+            fruit = new Apple(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
                             random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
         }
     }
