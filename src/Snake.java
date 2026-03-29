@@ -24,6 +24,7 @@ public class Snake {
     }
 
     public void shrink() {
+        if(bodyParts < 2) return;
         bodyParts--;
     }
 
