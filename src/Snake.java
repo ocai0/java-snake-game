@@ -24,10 +24,11 @@ public class Snake {
     }
 
     public void shrink() {
+        if(bodyParts < 2) return;
         bodyParts--;
     }
 
-    private void killPlayer() {
+    private void kill() {
         alive = false;
     }
 
@@ -91,20 +92,20 @@ public class Snake {
     public void checkBodyCollision() {
         for (int i = bodyParts; i > 0; i--) {
             if ((getHeadXPos() == x[i]) && (getHeadYPos() == y[i])) {
-                killPlayer();
+                kill();
             }
         }
     }
 
     public void checkScreenCollisions() {
         // collides w/ left border
-        if (getHeadXPos() < 0) killPlayer();
+        if (getHeadXPos() < 0) kill();
         // collides w/ right border
-        if (getHeadXPos() > GamePanel.SCREEN_WIDTH) killPlayer();
+        if (getHeadXPos() > GamePanel.SCREEN_WIDTH) kill();
         // collides w/ top border
-        if (getHeadYPos() < 0) killPlayer();
+        if (getHeadYPos() < 0) kill();
         // collides w/ bottom border
-        if (getHeadYPos() > GamePanel.SCREEN_HEIGHT) killPlayer();
+        if (getHeadYPos() > GamePanel.SCREEN_HEIGHT) kill();
     }
 
 
