@@ -13,6 +13,7 @@ public abstract class Fruit {
 
     public int getX() { return x; }
     public int getY() { return y; }
+    public abstract void draw(Graphics g);
     public int getPoints() { return points; }
 
     public abstract void applyEffect(GamePanel game);
