@@ -12,7 +12,7 @@ Ok, e quais são os principais objetivos:
 - Hierarquia OO
     - 1 superclasse ([Fruit.java](./src/Fruit.java)), com atributos e métodos.
     - 2 subclasses ([Apple](./src/Apple.java)) com atributo e método sobrescrito
-    - Algum lugar que referencie a classe pai ([GamePanel.java:14](./src/GamePanel.java))
+    - Algum lugar que referencie a classe pai ([GamePanel.java:16](./src/GamePanel.java))
 - Qualidade do código
     - Mensagens claras
     - Encapsulamento (tem em lugares como *[Snake.getHeadXPos](./src/Snake.java)* e [Snake.kill](./src/Snake.java), [GamePanel.addToScore](./src/GamePanel.java))
