@@ -7,6 +7,9 @@ public class Maca extends Fruta {
     @Override
     public void efeito(GamePanel game) {
         game.bodyParts++;
-        game.applesEaten++;
+    }
+
+    public int getPoints() {
+        return pontos;
     }
 }
