@@ -6,6 +6,6 @@ public class Apple extends Fruit {
 
     @Override
     public void applyEffect(GamePanel game) {
-        game.bodyParts++;
+        game.player.bodyParts++;
     }
 }
