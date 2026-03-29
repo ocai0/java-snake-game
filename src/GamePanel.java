@@ -24,7 +24,6 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
-        if(player != null) this.removeKeyListener(activeControls);
         startGame();
     }
 
@@ -33,7 +32,6 @@ public class GamePanel extends JPanel implements ActionListener {
         player = new Snake();
         activeControls = player.bindControls();
         this.addKeyListener(activeControls);
-        fruits.clear();
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
@@ -104,6 +102,14 @@ public class GamePanel extends JPanel implements ActionListener {
             checkPlayerAndFruitCollisions();
             player.checkCollisions();
             if(player.isDead()) running = false;
+        }
+        else {
+             if(player.isDead() && player.wantsToResetGame()) {
+                timer.stop();
+                fruits.clear();
+                this.removeKeyListener(activeControls);
+                startGame();
+             }
         }
         repaint();
     }
