@@ -129,7 +129,6 @@ public class GamePanel extends JPanel implements ActionListener {
         if((x[0] == maca.x * UNIT_SIZE) && (y[0] == maca.y * UNIT_SIZE)) {
             bodyParts++;
             score += maca.getPoints();
-            System.out.println("Maçã comida! +1 no tamanho da cobra.");
             maca = new Maca(random.nextInt(SCREEN_WIDTH / UNIT_SIZE),
                             random.nextInt(SCREEN_HEIGHT / UNIT_SIZE));
         }
