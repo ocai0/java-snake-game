@@ -63,8 +63,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void checkPlayerAndFruitCollisions() {
         for(Fruit fruit : fruits) {
             if((player.getHeadXPos() == fruit.x * UNIT_SIZE) && (player.getHeadYPos() == fruit.y * UNIT_SIZE)) {
-                player.grow();
-                score += fruit.getPoints();
+                fruit.applyEffect(this);
                 fruits.remove(fruit);
                 generateFruit();
             }
@@ -94,6 +93,10 @@ public class GamePanel extends JPanel implements ActionListener {
             (SCREEN_WIDTH - metrics.stringWidth(text)) / 2,
             g.getFont().getSize() + 340
         );
+    }
+
+    public void addToScore(int points) {
+        score += points;
     }
 
     public void drawScore(Graphics g) {

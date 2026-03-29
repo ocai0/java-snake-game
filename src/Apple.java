@@ -32,6 +32,7 @@ public class Apple extends Fruit {
 
     @Override
     public void applyEffect(GamePanel game) {
-        game.player.bodyParts++;
+        game.addToScore(points);
+        game.player.grow();
     }
 }
