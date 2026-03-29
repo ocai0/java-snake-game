@@ -3,6 +3,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.function.BiFunction;
+import java.util.List;
 
 public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_WIDTH = 600;
@@ -11,7 +13,11 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
     static final int DELAY = 75;
     int score;
-    ArrayList<Apple> fruits = new ArrayList<Apple>();
+    ArrayList<Fruit> fruits = new ArrayList<Fruit>();
+    private final List<BiFunction<Integer, Integer, Fruit>> FRUITS_TYPES = List.of(
+        Apple::new,
+        Pear::new
+    );
     char direction = 'R';
     boolean running = false;
     Timer timer;
@@ -39,7 +45,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void generateFruit() {
-        fruits.add(new Apple(random.nextInt(SCREEN_WIDTH / UNIT_SIZE), random.nextInt(SCREEN_HEIGHT / UNIT_SIZE)));
+        int x = random.nextInt(SCREEN_WIDTH / UNIT_SIZE);
+        int y = random.nextInt(SCREEN_HEIGHT / UNIT_SIZE);
+        int i = random.nextInt(FRUITS_TYPES.size());
+
+        Fruit newFruit = FRUITS_TYPES.get(i).apply(x, y);
+        fruits.add(newFruit);
     }
     
 
@@ -52,7 +63,9 @@ public class GamePanel extends JPanel implements ActionListener {
         if(running) {
             drawScore(g);
             player.draw(g);
-            for(Fruit fruit : fruits) fruit.draw(g);
+            for(Fruit fruit : fruits) {
+                fruit.draw(g);
+            }
         }
         else {
             gameOver(g);
