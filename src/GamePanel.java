@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
                 g.setColor(Color.red);
                 g.fillOval(maca.x * UNIT_SIZE, maca.y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
-
+                drawScore(g);
             }
         }
         else {
