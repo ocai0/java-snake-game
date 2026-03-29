@@ -24,7 +24,6 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
-        if(player != null) this.removeKeyListener(activeControls);
         startGame();
     }
 
@@ -33,7 +32,6 @@ public class GamePanel extends JPanel implements ActionListener {
         player = new Snake();
         activeControls = player.bindControls();
         this.addKeyListener(activeControls);
-        fruits.clear();
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
@@ -74,7 +72,6 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void gameOver(Graphics g) {
-        // Game Over text
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics = getFontMetrics(g.getFont());
@@ -86,6 +83,16 @@ public class GamePanel extends JPanel implements ActionListener {
             "Score: " + score,
             (SCREEN_WIDTH - metrics.stringWidth("Score: " + score)) / 2,
             g.getFont().getSize() + 280
+        );
+
+        g.setFont(new Font("Ink Free", Font.BOLD, 32));
+        g.setColor(Color.WHITE);
+        metrics = getFontMetrics(g.getFont());
+        String text = "Pressione ENTER para jogar";
+        g.drawString(
+            text,
+            (SCREEN_WIDTH - metrics.stringWidth(text)) / 2,
+            g.getFont().getSize() + 340
         );
     }
 
@@ -104,6 +111,15 @@ public class GamePanel extends JPanel implements ActionListener {
             checkPlayerAndFruitCollisions();
             player.checkCollisions();
             if(player.isDead()) running = false;
+        }
+        else {
+             if(player.isDead() && player.wantsToResetGame()) {
+                timer.stop();
+                fruits.clear();
+                this.removeKeyListener(activeControls);
+                score = 0;
+                startGame();
+             }
         }
         repaint();
     }
