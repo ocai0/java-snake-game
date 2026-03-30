@@ -36,4 +36,9 @@ public class Pear extends Fruit {
         game.addToScore(points);
         game.player.shrink();
     }
+
+    @Override
+    public String toString(){
+        return "This is an Pear class that gives " + points + " points";
+    }
 }

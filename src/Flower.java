@@ -33,4 +33,9 @@ public class Flower extends Boost {
     public void applyEffect(GamePanel game) {
         game.activateFlowerPower();
     }
+
+    @Override
+    public String toString(){
+        return "This is an Flower-Boost class";
+    }
 }

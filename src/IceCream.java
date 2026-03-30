@@ -33,4 +33,9 @@ public class IceCream extends Boost {
     public void applyEffect(GamePanel game) {
         game.activateIceCreamPower();
     }
+
+    @Override
+    public String toString(){
+        return "This is an IceCream-Boost class";
+    }
 }

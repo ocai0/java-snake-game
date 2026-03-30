@@ -35,4 +35,9 @@ public class Banana extends Fruit {
         game.addToScore(points);
         game.player.grow();
     }
+
+    @Override
+    public String toString(){
+        return "This is a Banana class that gives " + points + " points";
+    }
 }
