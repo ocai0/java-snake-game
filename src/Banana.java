@@ -4,18 +4,17 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.File;
 
-public class Pear extends Fruit {
+public class Banana extends Fruit {
     protected BufferedImage sprite;
 
-    public Pear(int x, int y) {
-        super(x, y, -10);
+    public Banana(int x, int y) {
+        super(x, y, 10);
         try {
-            this.sprite = ImageIO.read(new File("./sprites/pera.png"));
+            this.sprite = ImageIO.read(new File("./sprites/banana.png"));
         }
         catch(IOException e) {
             e.printStackTrace();
         }
-        
     }
 
     @Override
@@ -23,7 +22,7 @@ public class Pear extends Fruit {
         int uX = x * GamePanel.UNIT_SIZE;
         int uY = y * GamePanel.UNIT_SIZE;
         if(this.sprite == null) {
-            g.setColor(Color.GREEN);
+            g.setColor(Color.RED);
             g.fillOval(uX, uY, GamePanel.UNIT_SIZE, GamePanel.UNIT_SIZE);
         }
         else {
@@ -34,6 +33,6 @@ public class Pear extends Fruit {
     @Override
     public void applyEffect(GamePanel game) {
         game.addToScore(points);
-        game.player.shrink();
+        game.player.grow();
     }
 }
