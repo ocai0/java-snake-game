@@ -4,15 +4,14 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.File;
 
-public class Apple extends Fruit {
+public class Star extends Boost {
     protected BufferedImage sprite;
 
-    public Apple(int x, int y) {
-        super(x, y, 10);
+    public Star(int x, int y) {
+        super(x, y);
         try {
-            this.sprite = ImageIO.read(new File("./sprites/maca.png"));
-        }
-        catch(IOException e) {
+            this.sprite = ImageIO.read(new File("./sprites/estrela.png"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -21,24 +20,22 @@ public class Apple extends Fruit {
     public void draw(Graphics g) {
         int uX = x * GamePanel.UNIT_SIZE;
         int uY = y * GamePanel.UNIT_SIZE;
-        if(this.sprite == null) {
-            g.setColor(Color.RED);
+
+        if (this.sprite == null) {
+            g.setColor(Color.YELLOW);
             g.fillOval(uX, uY, GamePanel.UNIT_SIZE, GamePanel.UNIT_SIZE);
-        }
-        else {
+        } else {
             g.drawImage(this.sprite, uX, uY, GamePanel.UNIT_SIZE, GamePanel.UNIT_SIZE, null);
         }
     }
 
     @Override
     public void applyEffect(GamePanel game) {
-        game.addToScore(points);
-        game.player.grow();
+        game.player.halfSize();
     }
 
     @Override
     public String toString(){
-        return "This is an Apple class that gives " + points + " points";
+        return "This is an Star-Boost class";
     }
-
 }

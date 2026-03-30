@@ -15,6 +15,7 @@ public class Pear extends Fruit {
         catch(IOException e) {
             e.printStackTrace();
         }
+        
     }
 
     @Override
@@ -34,5 +35,10 @@ public class Pear extends Fruit {
     public void applyEffect(GamePanel game) {
         game.addToScore(points);
         game.player.shrink();
+    }
+
+    @Override
+    public String toString(){
+        return "This is an Pear class that gives " + points + " points";
     }
 }

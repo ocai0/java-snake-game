@@ -2,6 +2,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.util.Random;
 
 public class Snake {
     char direction = 'R';
@@ -11,8 +12,18 @@ public class Snake {
     final int y[] = new int[GamePanel.GAME_UNITS];
     boolean wantsToReset = false;
 
+    boolean flowerActive = false;
+    Color flowerColor = Color.MAGENTA;
+
+    Random random = new Random();
+
+    public Snake() {
+        x[0] = 0;
+        y[0] = 0;
+    }
+
     public boolean wantsToResetGame() {
-        if(wantsToReset) {
+        if (wantsToReset) {
             wantsToReset = false;
             return true;
         }
@@ -21,11 +32,38 @@ public class Snake {
 
     public void grow() {
         bodyParts++;
+        x[bodyParts - 1] = x[bodyParts - 2];
+        y[bodyParts - 1] = y[bodyParts - 2];
     }
 
     public void shrink() {
-        if(bodyParts < 2) return;
+        if (bodyParts <= 2)
+            return;
         bodyParts--;
+    }
+
+    public void doubleSize() {
+        int oldBodyParts = bodyParts;
+        bodyParts = bodyParts * 2;
+
+        for (int i = oldBodyParts; i < bodyParts; i++) {
+            x[i] = x[oldBodyParts - 1];
+            y[i] = y[oldBodyParts - 1];
+        }
+    }
+
+    public void halfSize() {
+        bodyParts = Math.max(2, bodyParts / 2);
+    }
+
+    public void activateFlowerColor() {
+        flowerActive = true;
+
+        int r = random.nextInt(3);
+
+        if (r == 0) flowerColor = Color.BLUE;
+        if (r == 1) flowerColor = Color.MAGENTA;
+        if (r == 2) flowerColor = Color.YELLOW;
     }
 
     private void kill() {
@@ -45,18 +83,21 @@ public class Snake {
     }
 
     public boolean isDead() {
-        return !this.isAlive();
+        return !alive;
     }
 
     public void draw(Graphics g) {
         for (int i = 0; i < bodyParts; i++) {
-            if (i == 0) {
+
+            if (flowerActive) {
+                g.setColor(flowerColor);
+            } else if (i == 0) {
                 g.setColor(Color.GREEN);
-                g.fillRect(x[i], y[i], GamePanel.UNIT_SIZE, GamePanel.UNIT_SIZE);
             } else {
                 g.setColor(new Color(45, 180, 0));
-                g.fillRect(x[i], y[i], GamePanel.UNIT_SIZE, GamePanel.UNIT_SIZE);
             }
+
+            g.fillRect(x[i], y[i], GamePanel.UNIT_SIZE, GamePanel.UNIT_SIZE);
         }
     }
 
@@ -98,16 +139,11 @@ public class Snake {
     }
 
     public void checkScreenCollisions() {
-        // collides w/ left border
         if (getHeadXPos() < 0) kill();
-        // collides w/ right border
-        if (getHeadXPos() > GamePanel.SCREEN_WIDTH) kill();
-        // collides w/ top border
+        if (getHeadXPos() >= GamePanel.SCREEN_WIDTH) kill();
         if (getHeadYPos() < 0) kill();
-        // collides w/ bottom border
-        if (getHeadYPos() > GamePanel.SCREEN_HEIGHT) kill();
+        if (getHeadYPos() >= GamePanel.SCREEN_HEIGHT) kill();
     }
-
 
     public KeyAdapter bindControls() {
         return new PlayerControls(this);
@@ -116,9 +152,11 @@ public class Snake {
 
 class PlayerControls extends KeyAdapter {
     Snake player;
-    PlayerControls(Snake _player) {
-        this.player = _player;
+
+    PlayerControls(Snake player) {
+        this.player = player;
     }
+
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -143,5 +181,9 @@ class PlayerControls extends KeyAdapter {
                 break;
         }
     }
-}
 
+    @Override
+    public String toString(){
+        return "This is the player class";
+    }
+}

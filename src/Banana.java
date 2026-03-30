@@ -4,13 +4,13 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.File;
 
-public class Apple extends Fruit {
+public class Banana extends Fruit {
     protected BufferedImage sprite;
 
-    public Apple(int x, int y) {
+    public Banana(int x, int y) {
         super(x, y, 10);
         try {
-            this.sprite = ImageIO.read(new File("./sprites/maca.png"));
+            this.sprite = ImageIO.read(new File("./sprites/banana.png"));
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -38,7 +38,6 @@ public class Apple extends Fruit {
 
     @Override
     public String toString(){
-        return "This is an Apple class that gives " + points + " points";
+        return "This is a Banana class that gives " + points + " points";
     }
-
 }
