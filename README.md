@@ -11,7 +11,7 @@ Ok, e quais são os principais objetivos:
 ### Checklist dos requisitos mínimos
 - Hierarquia OO
     - 1 superclasse ([Fruit.java](./src/Fruit.java)), com atributos e métodos.
-    - 2 subclasses ([Apple](./src/Apple.java)) com atributo e método sobrescrito
+    - 2 subclasses ([Apple](./src/Apple.java) e [Pear](./src/Pear.java) por exemplo) com atributo e método sobrescrito
     - Algum lugar que referencie a classe pai ([GamePanel.java:16](./src/GamePanel.java))
 - Qualidade do código
     - Mensagens claras
