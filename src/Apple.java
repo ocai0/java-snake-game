@@ -35,4 +35,10 @@ public class Apple extends Fruit {
         game.addToScore(points);
         game.player.grow();
     }
+
+    @Override
+    public String toString(){
+        return "This is an Apple class that gives " + points + " points";
+    }
+
 }

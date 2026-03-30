@@ -33,4 +33,9 @@ public class Star extends Boost {
     public void applyEffect(GamePanel game) {
         game.player.halfSize();
     }
+
+    @Override
+    public String toString(){
+        return "This is an Star-Boost class";
+    }
 }

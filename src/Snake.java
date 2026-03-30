@@ -181,4 +181,9 @@ class PlayerControls extends KeyAdapter {
                 break;
         }
     }
+
+    @Override
+    public String toString(){
+        return "This is the player class";
+    }
 }

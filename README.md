@@ -7,15 +7,24 @@ Ok, e quais são os principais objetivos:
 - Criar código com sobrescrita de comportamento (`@Override`)
 - Criar código com polimorfismo (`extends` e algum lugar que usa da superclasse pra referenciar objetos das subclasses (provavelmente um `ArrayList` faz isso))
 
+### Integrantes
+| | Nome | RA |
+| --- | --- | --- |
+| <img src="https://avatars.githubusercontent.com/u/130322697?v=4" style="display: inline-block; width: 64px"> | Paulo Vitor Amorim de Oliveira | 42322453
+| <img src="https://avatars.githubusercontent.com/u/129918519?v=4" style="display: inline-block; width: 64px"> | Lucas Ferreira Andrade | 4231921505
+| <img src="https://avatars.githubusercontent.com/u/35999467?v=4" style="display: inline-block; width: 64px"> | Caio Alves Fernandes *(eu ai ó)* | 4231925609
 
 ### Checklist dos requisitos mínimos
 - Hierarquia OO
     - 1 superclasse ([Fruit.java](./src/Fruit.java)), com atributos e métodos.
-    - 2 subclasses ([Apple](./src/Apple.java) e [Pear](./src/Pear.java) por exemplo) com atributo e método sobrescrito
-    - Algum lugar que referencie a classe pai ([GamePanel.java:16](./src/GamePanel.java))
+    - 2 subclasses com atributo e método sobrescrito
+        - *Temos exemplos em [Apple](./src/Apple.java), [Pear](./src/Pear.java), [Flower](./src/Flower.java), [Star](./src/Star.java) e por aí vai
+    - Algum lugar que referencie a classe pai ([GamePanel.java:21](./src/GamePanel.java))
 - Qualidade do código
     - Mensagens claras
     - Encapsulamento (tem em lugares como *[Snake.getHeadXPos](./src/Snake.java)* e [Snake.kill](./src/Snake.java), [GamePanel.addToScore](./src/GamePanel.java))
+    - Implementação de `.toString()` em algum lugar
+        - Não faz muito sentido em um projeto de game, mas pra desencargo de consciência foi implementado em algumas classes (*Apple*, *Pear*, *Star*, etc)
 - Execução
     - *Assim, o jogo roda bonitinho, então podemos considerar esse só "check"?
 
@@ -23,7 +32,6 @@ Ok, e quais são os principais objetivos:
 
 ### Algumas regras desse projeto
 - O código será escrito em inglês
-- As features e bugfixes vêm das issues
 - Todo PR vai pra branch `dev`, ok?
 - As branches seguem a seguinte forma de escrita: `[PREFIXO]/[PALAVRAS_CHAVE_DA_EVOLUCAO]`.
     - Ex: `feat/fruit-apple`, `fix/gameover-screen`...
@@ -35,13 +43,6 @@ Ok, e quais são os principais objetivos:
     - `Adicionado README ao projeto`
     - `Criado classe 'Snake'`
     - `Resolvido bug que não deixava as frutas renderizarem`
-
-### Integrantes
-| | Nome | RA |
-| --- | --- | --- |
-| <img src="https://avatars.githubusercontent.com/u/130322697?v=4" style="display: inline-block; width: 64px"> | Paulo Vitor Amorim de Oliveira | 42322453
-| <img src="https://avatars.githubusercontent.com/u/129918519?v=4" style="display: inline-block; width: 64px"> | Lucas Ferreira Andrade | 4231921505
-| <img src="https://avatars.githubusercontent.com/u/35999467?v=4" style="display: inline-block; width: 64px"> | Caio Alves Fernandes *(eu ai ó)* | 4231925609
 
 #### O que eu fiz pra rodar esse trem aqui:
 - Instalo o java bonito e adiciono o caminho da pasta do '\\bin' na variável PATH do Windows
